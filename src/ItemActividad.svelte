@@ -1,10 +1,13 @@
 <script>
-    import { fade, fly } from "svelte/transition";
+  
     import { createEventDispatcher } from "svelte";
-
-    export let id;
-    export let text;
-    export let complete;
+    import { scale } from 'svelte/transition';
+    import { cubicInOut } from 'svelte/easing';
+    import { fade, fly } from 'svelte/transition';
+    export let id
+    export let complete
+    export let text
+    
 
     const dispatch = createEventDispatcher();
 
@@ -13,37 +16,39 @@
     }
 
     function toggleStatus() {
-        let nuevoEstado = !complete;
+        let newStatus = !complete;
         dispatch("toggle", {
             id,
-            nuevoEstado,
+            newStatus,
         });
     }
+
+  
+    
 </script>
 
- 
-    <li in:fly={{ x: 900, duration: 500 }}>
-        {#if complete}
-            <span class:complete>
-                {text}
-            </span>
-            <button on:click={toggleStatus}> ✔️ </button>
-        {:else}
-            <span>
-                {text}
-            </span>
-            <button on:click={toggleStatus}> ❌ </button>
-        {/if}
+<li in:fly={{ x: 900, duration: 500 }} out:fade />
+<li>
+    {#if complete}
+        <span  
+      
+        class="is-complete is-button">{text}</span>
+        <button on:click={toggleStatus}> ✔️ </button>
+    {:else}
+        <span>{text}</span>
+        <button  class="is-button" on:click={toggleStatus}> ❌ </button>
+    {/if}
 
-        <button class="is-button" on:click={remove}> 🗑️ </button>
-    </li>
- 
+    <button class="is-button" on:click={remove}> 🗑️</button>
+</li>
 
 <style>
-    .complete {
+       .is-complete {
         text-decoration: line-through;
         color: green;
     }
+
+     
 
     span {
         margin-right: auto;
@@ -53,9 +58,5 @@
         font-size: 1.2em;
         font-weight: bold;
     }
-    .items{
-        display: flex;
-        flex-direction: column;
-        padding: 1rem;
-    }
+    
 </style>

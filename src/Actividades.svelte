@@ -12,22 +12,27 @@
         setDoc,
         addDoc,
         doc,
-        updateDoc
+        updateDoc,
+        deleteDoc,
     } from "firebase/firestore";
     import { startWith } from "rxjs/operators";
+    import { subscribe } from "svelte/internal";
 
     export let uid;
 
     let text = "";
-    const actividadesRef = collection(db, "actividades")
+    const actividadesRef = collection(db, "actividades");
     //const query = db.collection("actividades").where("uid", "==", uid).orderBy("created")
+
     const q = query(
         actividadesRef,
         where("uid", "==", uid),
         orderBy("created")
     );
 
-    const actividades = collectionData(q, "id").pipe(startWith([])); // converts into observable
+    const actividades = collectionData(q, { idField: "id" }).pipe(
+        startWith([])
+    ); // converts into observable
 
     async function add() {
         await addDoc(actividadesRef, {
@@ -41,15 +46,14 @@
     }
 
     function updateStatus(event) {
-        console.log(event);
+        //    console.log(event);
         const { id, newStatus } = event.detail;
+        //    console.log(id)
         console.log(id);
         console.log(newStatus);
 
-      
-        updateDoc(actividadesRef,{ complete: newStatus } ).then( () => {
-            console.log("data updated")
-        }).catch(console.log)
+        const dbRef = doc(db, "actividades", id);
+        updateDoc(dbRef, { complete: newStatus });
 
         /*  
         db.collection("todos").doc(id).update({ complete: newStatus });
@@ -57,34 +61,47 @@
         collection(firestore, "todos", id, "links") */
     }
 
-    const removeItem = (event) => {
+    const removeItem = async (event) => {
+        // console.log(event);
+        //  const { id } = event.target.id;
+        //   console.log(id)
         const { id } = event.detail;
-        db.collection("todos").doc(id).delete(id);
+        //db.collection("todos").doc(id).delete(id);
+        const docRef = doc(db, "actividades", id);
+        await deleteDoc(docRef);
     };
 </script>
 
-<ul>
-    {#each $actividades as actividad}
-        <!-- $actividades wrapped, actividad obj-->
-        <ItemActividad
-            {...actividad}
-            on:remove={removeItem}
-            on:toggle={updateStatus}
-        />
-        <!--template ImteActividad,  spread actividad-->
-    {/each}
-</ul>
+<div class="contenedor-actividades">
+    <ul>
+        {#each $actividades as acti}
+            <!-- $actividades wrapped, actividad obj-->
+            <ItemActividad
+                {...acti}
+                on:remove={removeItem}
+                on:toggle={updateStatus}
+            />
+            <!--template ImteActividad,  spread actividad-->
+        {/each}
+    </ul>
 
-<input bind:value={text} />
-<hr />
-<p>Tu tarea es <strong>{text}</strong></p>
-<button on:click={add}>Agregar actividad</button>
-
+    <input class="is-button" bind:value={text} />
+    <hr />
+    <p class="tarea">Tu tarea es <strong>{text}</strong></p>
+    <button on:click={add}>Agregar actividad</button>
+</div>
 
 <style>
-    ul{
-        display:flex;
+    .tarea {
+        word-wrap: break-word;
+    }
+    .contenedor-actividades {
+        display: flex;
         flex-direction: column;
-        padding:2rem 1rem;
+        gap: 10px;
+    }
+    ul {
+        display: flex;
+        flex-direction: column;
     }
 </style>

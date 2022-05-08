@@ -1,11 +1,17 @@
 <script>
-	export let name 
-import Actividades from "./Actividades.svelte"
+	 
 	import Login from "./Login.svelte"
 </script>
 
+ 
+
+<svelte:head>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+</svelte:head>
+
+
 <main>
-	 <h1>Welcome to {name}</h1>
+	  
 	 <Login/>
 	 
 </main>

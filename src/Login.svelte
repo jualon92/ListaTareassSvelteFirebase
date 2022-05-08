@@ -18,14 +18,28 @@
 
 </script>
 
-<section>
+<section class="contenedor-app">
     {#if $user}  
         <Profile {...$user}/>  <!-- unwrap obj observable directo en template-->
-        <button on:click={ () => auth.signOut()}>Deslogear</button>
+        <button class="log-button" on:click={ () => auth.signOut()}>Deslogear</button>
         <hr>
        <Actividades uid={$user.uid}/>  
     {:else} <!--user empty-->
-        <button on:click={logear}>Logear con Google</button>
+        <button  class="log-button"  on:click={logear}>Logear con Google</button>
     {/if}
 </section>
+
+<style>
+
  
+ .log-button{
+    margin-top: 10px;
+}
+    .contenedor-app{
+        display: flex;
+    flex-direction: column;
+    padding: 10% 8%; 
+    gap:10px;
+    
+    }
+</style>
