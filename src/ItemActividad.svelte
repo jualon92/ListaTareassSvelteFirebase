@@ -32,11 +32,11 @@
     {#if complete}
         <span  
       
-        class="is-complete is-button">{text}</span>
+        class="is-complete is-button acti">{text}</span>
         <button on:click={toggleStatus}> ✔️ </button>
     {:else}
         <span>{text}</span>
-        <button  class="is-button" on:click={toggleStatus}> ❌ </button>
+        <button  class="is-button acti" on:click={toggleStatus}> ❌ </button>
     {/if}
 
     <button class="is-button" on:click={remove}> 🗑️</button>
@@ -48,10 +48,11 @@
         color: green;
     }
 
-     
+   
 
     span {
         margin-right: auto;
+        align-self: center;
     }
     li {
         display: flex;
