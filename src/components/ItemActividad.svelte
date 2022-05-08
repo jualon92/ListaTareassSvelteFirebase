@@ -1,8 +1,7 @@
 <script>
   
     import { createEventDispatcher } from "svelte";
-    import { scale } from 'svelte/transition';
-    import { cubicInOut } from 'svelte/easing';
+ 
     import { fade, fly } from 'svelte/transition';
     export let id
     export let complete

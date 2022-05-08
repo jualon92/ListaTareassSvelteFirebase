@@ -1,10 +1,13 @@
 <script>
     import Profile from "./Profile.svelte";
+    import Actividades from "./Actividades.svelte";
+
+
     // import ListaHacer from "./Todos.svelte"
-    import { app, auth, googleProvider } from "./firebase.js";
+    import { app, auth, googleProvider } from "../firebase";
     import { signInWithRedirect } from "firebase/auth";
     import { authState } from "rxfire/auth";
-    import Actividades from "./Actividades.svelte";
+    
 
     let user = authState(auth);
     console.log(user);
@@ -19,7 +22,7 @@
     {#if $user}
         <Profile {...$user} />
         <!-- unwrap obj observable directo en template-->
-        <button class="log-button" on:click={() => auth.signOut()}
+        <button class="log-button button is-link" on:click={() => auth.signOut()}
             >Deslogear</button
         >
         <hr />
@@ -42,11 +45,12 @@
 
     .log-button {
         margin-top: 10px;
+        align-self: flex-start;
     }
     .contenedor-app {
         display: flex;
         flex-direction: column;
-        padding: 10% 8%;
+        padding: 15% 8%;
         gap: 10px;
 
         

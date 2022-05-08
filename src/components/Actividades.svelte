@@ -1,6 +1,6 @@
 <script>
     import ItemActividad from "./ItemActividad.svelte";
-    import { db } from "./firebase.js";
+    import { db } from "../firebase.js";
     import { collectionData } from "rxfire/firestore";
     import {
         getFirestore,
@@ -88,7 +88,7 @@
     <input class="is-button" bind:value={text} />
     <hr />
     <p class="tarea">Tu tarea es <strong>{text}</strong></p>
-    <button on:click={add}>Agregar actividad</button>
+    <button class="button is-fullwidth is-large is-link " on:click={add}>Agregar actividad</button>
 </div>
 
 <style>

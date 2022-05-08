@@ -1,6 +1,6 @@
 <script>
 	 
-	import Login from "./Login.svelte"
+	import Login from "./components/Login.svelte"
 </script>
 
  
