@@ -96,10 +96,10 @@
             {/each}
         </ul>
     
-    <input class="is-button" bind:value={text} />
+    <input class="form-control form-control-lg" bind:value={text} />
     <hr />
     <p class="tarea">Tu tarea es <strong>{text}</strong></p>
-    <button class="button is-fullwidth is-large is-link " on:click={add}
+    <button class="button is-fullwidth is-large is-link btn btn-primary btn-lg  " on:click={add}
         >Agregar actividad</button
     >
 </div>

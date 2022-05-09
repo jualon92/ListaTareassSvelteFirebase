@@ -28,7 +28,7 @@
         <Profile {...$user} />
         <!-- unwrap obj observable directo en template-->
         <button
-            class="log-button button is-link"
+            class="log-button button is-link btn btn-primary "
             on:click={async () =>await  auth.signOut()} on:click={ () => saliendo = true}>Deslogear</button
         >
         <hr />
@@ -36,7 +36,7 @@
     {:else }
         <!--user empty-->
         
-        <button in:fade={{ delay:800}} class="log-button logear" on:click={logear} 
+        <button in:fade={{ delay:800}} class="log-button logear btn btn-outline-primary" on:click={logear} 
             >Logear con Google</button
         >
        
