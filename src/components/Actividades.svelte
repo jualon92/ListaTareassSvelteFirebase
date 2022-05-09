@@ -2,6 +2,8 @@
     import ItemActividad from "./ItemActividad.svelte";
     import { db } from "../firebase.js";
     import { collectionData } from "rxfire/firestore";
+    import { fade } from "svelte/transition";
+    import { onMount } from "svelte";
     import {
         getFirestore,
         collection,
@@ -21,8 +23,11 @@
     export let uid;
 
     let text = "";
+    $: isPageLoaded =  false;
     const actividadesRef = collection(db, "actividades");
     //const query = db.collection("actividades").where("uid", "==", uid).orderBy("created")
+  
+
 
     const q = query(
         actividadesRef,
@@ -31,8 +36,10 @@
     );
 
     const actividades = collectionData(q, { idField: "id" }).pipe(
-        startWith([])
+        startWith([]) 
     ); // converts into observable
+
+   
 
     async function add() {
         await addDoc(actividadesRef, {
@@ -45,6 +52,7 @@
         text = "";
     }
 
+    const desaparecerLoader = () => console.log("termine")
     function updateStatus(event) {
         //    console.log(event);
         const { id, newStatus } = event.detail;
@@ -73,22 +81,27 @@
 </script>
 
 <div class="contenedor-actividades">
-    <ul>
-        {#each $actividades as acti}
-            <!-- $actividades wrapped, actividad obj-->
-            <ItemActividad
-                {...acti}
-                on:remove={removeItem}
-                on:toggle={updateStatus}
-            />
-            <!--template ImteActividad,  spread actividad-->
-        {/each}
-    </ul>
-
+ 
+        <ul>
+            {#each $actividades as acti}
+                <!-- $actividades wrapped, actividad obj-->
+                <ItemActividad
+                    {...acti}
+                    
+                    
+                    on:remove={removeItem}
+                    on:toggle={updateStatus}
+                />
+                <!--template ImteActividad,  spread actividad-->
+            {/each}
+        </ul>
+    
     <input class="is-button" bind:value={text} />
     <hr />
     <p class="tarea">Tu tarea es <strong>{text}</strong></p>
-    <button class="button is-fullwidth is-large is-link " on:click={add}>Agregar actividad</button>
+    <button class="button is-fullwidth is-large is-link " on:click={add}
+        >Agregar actividad</button
+    >
 </div>
 
 <style>
@@ -103,6 +116,7 @@
     ul {
         display: flex;
         flex-direction: column;
-        gap:5px;
+        gap: 5px;
+        margin-bottom: 20px;
     }
 </style>

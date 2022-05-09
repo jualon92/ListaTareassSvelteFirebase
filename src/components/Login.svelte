@@ -5,38 +5,60 @@
 
     // import ListaHacer from "./Todos.svelte"
     import { app, auth, googleProvider } from "../firebase";
-    import { signInWithRedirect } from "firebase/auth";
+    import { signInWithPopup, signInWithRedirect } from "firebase/auth";
     import { authState } from "rxfire/auth";
-    
+    import {fade} from "svelte/transition"
 
+    $: show = true
     let user = authState(auth);
+    let cambioEstado = true
     console.log(user);
     // const unsubscribe = authState(auth).subscribe(u => user = u)
 
-    const logear = () => {
-        signInWithRedirect(auth, googleProvider);
-    };
+    const logear =  () => {
+       
+             signInWithPopup(auth, googleProvider)
+    
+         
+    }
+
+    const desactivar = (event) => {
+        console.log(event)
+    }
+   
 </script>
 
 <section class="contenedor-app">
-    {#if $user}
+    <slot>
+    {#if $user  }
         <Profile {...$user} />
         <!-- unwrap obj observable directo en template-->
-        <button class="log-button button is-link" on:click={() => auth.signOut()}
-            >Deslogear</button
+        <button
+            class="log-button button is-link"
+            on:click={() => auth.signOut()}>Deslogear</button
         >
         <hr />
         <Actividades uid={$user.uid} />
-    {:else}
+    {:else }
         <!--user empty-->
-        <button class="log-button logear" on:click={logear}
+    
+        <button in:fade={{duration:1600}} class="log-button logear" on:click={logear} 
             >Logear con Google</button
         >
+       
     {/if}
+    </slot>
 </section>
 
 <style>
-    
+    section {
+        background: rgb(235, 235, 235);
+        padding: 20px;
+    }
+
+    .desaparecer {
+        opacity: 0;
+    }
     .logear {
         width: 200px;
         height: 40px;
@@ -52,12 +74,10 @@
         flex-direction: column;
         padding: 15% 8%;
         gap: 10px;
-
-        
     }
-    @media screen and (min-width:1000px){
-        .contenedor-app{
+    @media screen and (min-width: 1000px) {
+        .contenedor-app {
             padding: 10% 18%;
-        }       
+        }
     }
 </style>
