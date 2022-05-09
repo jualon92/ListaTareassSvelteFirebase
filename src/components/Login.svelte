@@ -9,23 +9,17 @@
     import { authState } from "rxfire/auth";
     import {fade} from "svelte/transition"
 
-    $: show = true
+    let saliendo = false
     let user = authState(auth);
-    let cambioEstado = true
+ 
     console.log(user);
     // const unsubscribe = authState(auth).subscribe(u => user = u)
 
     const logear =  () => {
-       
-             signInWithPopup(auth, googleProvider)
-    
-         
+        signInWithPopup(auth, googleProvider)  
     }
 
-    const desactivar = (event) => {
-        console.log(event)
-    }
-   
+     
 </script>
 
 <section class="contenedor-app">
@@ -35,14 +29,14 @@
         <!-- unwrap obj observable directo en template-->
         <button
             class="log-button button is-link"
-            on:click={() => auth.signOut()}>Deslogear</button
+            on:click={async () =>await  auth.signOut()} on:click={ () => saliendo = true}>Deslogear</button
         >
         <hr />
         <Actividades uid={$user.uid} />
     {:else }
         <!--user empty-->
-    
-        <button in:fade={{duration:1600}} class="log-button logear" on:click={logear} 
+        
+        <button in:fade={{ delay:800}} class="log-button logear" on:click={logear} 
             >Logear con Google</button
         >
        
