@@ -8,10 +8,9 @@ Lista de tareas por hacer
 
 
 
+![image](https://user-images.githubusercontent.com/46230600/167516099-fa0c5632-e390-4928-8608-42d7cc31d809.png)
 
 
  
 ![image](https://user-images.githubusercontent.com/46230600/167286373-a3fa881d-b694-4566-a91d-e11960873a2e.png)
-
-
-![image](https://user-images.githubusercontent.com/46230600/167286027-75aa49e4-48ff-4e31-a79b-588464ce099d.png)
+ 
