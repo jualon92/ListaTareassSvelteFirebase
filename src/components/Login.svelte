@@ -26,7 +26,7 @@ import { onMount } from "svelte";
     const logear = async () => {
         window.sessionStorage.setItem("logeando", "true") // redirect causa un refresh,  solo en storage puede evitar borrado
 
-        await signInWithRedirect(auth, googleProvider)  
+        await signInWithPopup(auth, googleProvider)  
         
     }
  
