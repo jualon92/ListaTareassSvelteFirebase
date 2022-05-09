@@ -8,6 +8,8 @@
     import { signInWithPopup, signInWithRedirect } from "firebase/auth";
     import { authState } from "rxfire/auth";
     import {fade} from "svelte/transition"
+import { onMount } from "svelte";
+    $: activo = false 
 
     let saliendo = false
     let user = authState(auth);
@@ -15,10 +17,29 @@
     console.log(user);
     // const unsubscribe = authState(auth).subscribe(u => user = u)
 
-    const logear =  () => {
-        signInWithPopup(auth, googleProvider)  
+    const estaLogeando = () => {
+        let estado = JSON.parse(window.sessionStorage.getItem("logeando")) || null
+        console.log(estado)
+        activo = estado 
+
+    }
+    const logear = async () => {
+        window.sessionStorage.setItem("logeando", "true") // redirect causa un refresh,  solo en storage puede evitar borrado
+
+        await signInWithRedirect(auth, googleProvider)  
+        
+    }
+ 
+    const delogear = async () => {
+        window.sessionStorage.removeItem("logeando")
+        activo = null
+        await  auth.signOut()
+       
     }
 
+    onMount( () => {
+        estaLogeando()
+    })
      
 </script>
 
@@ -29,10 +50,15 @@
         <!-- unwrap obj observable directo en template-->
         <button
             class="log-button button is-link btn btn-primary "
-            on:click={async () =>await  auth.signOut()} on:click={ () => saliendo = true}>Deslogear</button
+             on:click={delogear} >Deslogear</button
         >
         <hr />
         <Actividades uid={$user.uid} />
+    {:else if activo}  <!-- refresh causado por enter o redirect -->
+      <!--   <div class="">andando perring</div> --> 
+        <div class="spinner-border spinner" role="status">
+            <span class="sr-only"></span>
+          </div>
     {:else }
         <!--user empty-->
         
@@ -45,6 +71,9 @@
 </section>
 
 <style>
+    .spinner{
+        margin:0 auto;
+    }
     section {
         background: rgb(235, 235, 235);
         padding: 20px;
