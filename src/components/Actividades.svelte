@@ -78,11 +78,21 @@
         const docRef = doc(db, "actividades", id);
         await deleteDoc(docRef);
     };
+
+    onMount( async () => {
+        console.log("termine")
+        window.addEventListener("load", () => {
+        console.log("carge")
+    })
+    })
+
+    
+    
 </script>
 
 <div class="contenedor-actividades">
  
-        <ul>
+        <ul class="list-group">
             {#each $actividades as acti}
                 <!-- $actividades wrapped, actividad obj-->
                 <ItemActividad
@@ -102,9 +112,16 @@
     <button class="button is-fullwidth is-large is-link btn btn-primary btn-lg  " on:click={add}
         >Agregar actividad</button
     >
+    
+        
 </div>
 
 <style>
+    .toast{
+         width: 160px;
+         margin-top:2%;
+         margin-right:4%;
+    }
     .tarea {
         word-wrap: break-word;
     }

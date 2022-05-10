@@ -27,18 +27,18 @@
 </script>
 
  
-<li   in:fly={{ x: 900, duration: 1400 }}  out:fade> 
+<li  class="list-group-item" in:fly={{ x: 900, duration: 1400 }}  out:fade> 
     {#if complete}
         <span  
       
-        class="is-complete is-button acti"  >{text}</span>
-        <button    on:click={toggleStatus}> ✔️ </button>
+        class="is-complete is-button acti"  ><strong>{text}</strong> </span>
+        <button  class="btn btn-outline-primary "  on:click={toggleStatus}> ✔️ </button>
     {:else}
         <span >{text}</span>
-        <button    class="is-button acti" on:click={toggleStatus}> ❌ </button>
+        <button    class="is-button acti btn btn-outline-primary" on:click={toggleStatus}> ❌ </button>
     {/if}
 
-    <button  class="is-button" on:click={remove}> 🗑️</button>
+    <button  class="is-button btn btn-outline-primary" on:click={remove}> 🗑️</button>
 </li>
 
 <style>

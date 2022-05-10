@@ -24,7 +24,7 @@ import { onMount } from "svelte";
 
     }
     const logear = async () => {
-        window.sessionStorage.setItem("logeando", "true") // redirect causa un refresh,  solo en storage puede evitar borrado
+        window.sessionStorage.setItem("logeando", "true") // redirect causa un refresh,  => solo en storage puede evitar borrado. 
 
         await signInWithPopup(auth, googleProvider)  
         
@@ -37,7 +37,7 @@ import { onMount } from "svelte";
        
     }
 
-    onMount( () => {
+    onMount( () => { //redirect causa refresh, al refresh seteo bandera.  template render segun bandera
         estaLogeando()
     })
      
