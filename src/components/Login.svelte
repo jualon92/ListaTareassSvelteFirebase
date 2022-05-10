@@ -18,7 +18,7 @@ import { onMount } from "svelte";
     // const unsubscribe = authState(auth).subscribe(u => user = u)
 
     const estaLogeando = () => {
-        let estado = JSON.parse(window.sessionStorage.getItem("logeando")) || null
+        let estado = JSON.parse(window.sessionStorage.getItem("logeando"))  
         console.log(estado)
         activo = estado 
 
