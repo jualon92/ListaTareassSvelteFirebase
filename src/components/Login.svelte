@@ -18,9 +18,18 @@ import { onMount } from "svelte";
     // const unsubscribe = authState(auth).subscribe(u => user = u)
 
     const estaLogeando = () => {
-        let estado = JSON.parse(window.sessionStorage.getItem("logeando"))  
-        console.log(estado)
-        activo = estado 
+        let respuesta =  JSON.parse(window.sessionStorage.getItem("logeando")) 
+        if (respuesta){ //usar short circuit operator
+            
+        activo = respuesta 
+        console.log(respuesta)
+
+        }else{
+            activo = false 
+            console.log(respuesta)
+        }
+      
+        
 
     }
     const logear = async () => {
