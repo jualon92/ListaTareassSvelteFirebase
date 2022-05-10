@@ -5,7 +5,7 @@
 
     // import ListaHacer from "./Todos.svelte"
     import { app, auth, googleProvider } from "../firebase";
-    import { signInWithPopup, signInWithRedirect } from "firebase/auth";
+    import { signInWithPopup, signInWithRedirect, signInAnonymously } from "firebase/auth";
     import { authState } from "rxfire/auth";
     import {fade} from "svelte/transition"
 import { onMount } from "svelte";
@@ -35,11 +35,14 @@ import { onMount } from "svelte";
     const logear = async () => {
         window.sessionStorage.setItem("logeando", "true") // redirect causa un refresh,  => solo en storage puede evitar borrado. 
         console.log("pasado a true")
-        activo = true
+        activo = true  // en mobile, redirect no causa refresco (google auth y sus misterios)
         await signInWithPopup(auth, googleProvider)  
         
     }
- 
+    
+    const logSecundario = async() => {
+        await signInAnonymously(auth)
+    }
     const delogear = async () => {
         window.sessionStorage.removeItem("logeando")
         activo = null
@@ -75,6 +78,10 @@ import { onMount } from "svelte";
         <button in:fade={{ delay:800}} class="log-button logear btn btn-outline-primary" on:click={logear} 
             >Logear con Google</button
         >
+
+        <button in:fade={{ delay:800}} class="log-button logear btn btn-outline-primary" on:click={logSecundario} 
+        >Logear como Invitado</button
+    >
        
     {/if}
     </slot>
