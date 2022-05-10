@@ -32,13 +32,13 @@
         <span  
       
         class="is-complete is-button acti"  ><strong>{text}</strong> </span>
-        <button  class="btn btn-outline-primary "  on:click={toggleStatus}> ✔️ </button>
+        <button  class="btn btn-outline-success"  on:click={toggleStatus}> ✔️ </button>
     {:else}
         <span >{text}</span>
-        <button    class="is-button acti btn btn-outline-primary" on:click={toggleStatus}> ❌ </button>
+        <button    class="is-button acti btn  btn-outline-danger" on:click={toggleStatus}> ❌ </button>
     {/if}
 
-    <button  class="is-button btn btn-outline-primary" on:click={remove}> 🗑️</button>
+    <button  class="is-button btn btn-outline-dark" on:click={remove}> 🗑️</button>
 </li>
 
 <style>
